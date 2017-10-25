@@ -26,6 +26,7 @@ compiler:
 - gcc
 script:
 # get toolchain
+
 - git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git && export PATH=$PATH:$(pwd)/depot_tools
 - if [ "$CROSS" == "arm-linux-gnueabihf-" ]; then git clone --depth 1 https://github.com/raspberrypi/tools.git rpi_tools && export PATH=$PATH:$(pwd)/rpi_tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin; fi
 # get WebRTC
