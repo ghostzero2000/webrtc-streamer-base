@@ -36,7 +36,11 @@ script:
 - sed -i -e 's|"examples",||' src/BUILD.gn
 # patch webrtc to not download chromium-webrtc-resources
 - sed -i -e "s|'src/resources'],|'src/resources'],'condition':'rtc_include_tests==true',|" src/DEPS
-- gclient sync
+- gclient sync --jobs=16
+- cd src
+- git checkout 81ddc78536585cb960699ed6e3c1a698645deb1e
+- cd ..
+- gclient sync --jobs=16
 - popd
 # get, build and install live555 & alsa
 - make WEBRTCROOT=./webrtc live555 alsa-lib
