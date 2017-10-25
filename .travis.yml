@@ -35,6 +35,7 @@ script:
 - cd src
 - git checkout 81ddc78536585cb960699ed6e3c1a698645deb1e
 - cd ..
+- gclient sync
 # patch webrtc to not generate ninja files for examples (that depend on gtk)
 - sed -i -e 's|"examples",||' src/BUILD.gn
 # patch webrtc to not download chromium-webrtc-resources
