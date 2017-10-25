@@ -3,20 +3,20 @@ env:
   global:
     - GNARGSCOMMON='is_debug=false rtc_include_tests=false rtc_enable_protobuf=false use_custom_libcxx=false use_ozone=true rtc_include_pulse_audio=false' 
   matrix:
-    - |
-      GYP_GENERATOR_OUTPUT=x86_64     
-      GNARGS='rtc_use_h264=true ffmpeg_branding="Chrome"'
-      SYSROOT=${TRAVIS_BUILD_DIR}/webrtc/src/build/linux/debian_jessie_amd64-sysroot
+    #- |
+    #  GYP_GENERATOR_OUTPUT=x86_64     
+    #  GNARGS='rtc_use_h264=true ffmpeg_branding="Chrome"'
+    #  SYSROOT=${TRAVIS_BUILD_DIR}/webrtc/src/build/linux/debian_jessie_amd64-sysroot
     - |
       GYP_GENERATOR_OUTPUT=rpi-armv7  
       GNARGS='rtc_use_h264=true ffmpeg_branding="Chrome" is_clang=false target_cpu="arm" treat_warnings_as_errors=false' 
       CROSS=arm-linux-gnueabihf- 
       SYSROOT=${TRAVIS_BUILD_DIR}/webrtc/src/build/linux/debian_jessie_arm-sysroot GYP_DEFINES="target_arch=arm"
-    - |
-      GYP_GENERATOR_OUTPUT=rpi-armv6  
-      GNARGS='is_clang=false target_cpu="arm" treat_warnings_as_errors=false arm_version=6 arm_arch="armv6" arm_float_abi="hard" arm_use_neon=false arm_optionally_use_neon=false rtc_build_with_neon=false arm_use_thumb=false rtc_include_opus=false use_sysroot=false' 
-      CROSS=arm-linux-gnueabihf- 
-      CFLAGS_EXTRA="-march=armv6 -mfpu=vfp -mfloat-abi=hard"
+    #- |
+    #  GYP_GENERATOR_OUTPUT=rpi-armv6  
+    #  GNARGS='is_clang=false target_cpu="arm" treat_warnings_as_errors=false arm_version=6 arm_arch="armv6" arm_float_abi="hard" arm_use_neon=false arm_optionally_use_neon=false rtc_build_with_neon=false arm_use_thumb=false rtc_include_opus=false use_sysroot=false' 
+     # CROSS=arm-linux-gnueabihf- 
+     # CFLAGS_EXTRA="-march=armv6 -mfpu=vfp -mfloat-abi=hard"
 addons:
   apt:
     packages:
@@ -33,14 +33,14 @@ script:
 - pushd webrtc
 - fetch --no-history --nohooks webrtc
 - cd src
-- git checkout 2a5e7906a90c54bcba10e778f6d60c5f5485c2df
-- gclient sync
+- git checkout 919dc2e843ed4d0e276a88ef5b4abda1a51c2f3f
+- gclient sync --force
 - cd ..
 # patch webrtc to not generate ninja files for examples (that depend on gtk)
 - sed -i -e 's|"examples",||' src/BUILD.gn
 # patch webrtc to not download chromium-webrtc-resources
 - sed -i -e "s|'src/resources'],|'src/resources'],'condition':'rtc_include_tests==true',|" src/DEPS
-- gclient sync
+- gclient sync --force
 - popd
 # get, build and install live555 & alsa
 - make WEBRTCROOT=./webrtc live555 alsa-lib
