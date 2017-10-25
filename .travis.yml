@@ -33,7 +33,7 @@ script:
 - pushd webrtc
 - fetch --no-history --nohooks webrtc
 - cd src
-- git checkout 81ddc78536585cb960699ed6e3c1a698645deb1e
+- git checkout 2a5e7906a90c54bcba10e778f6d60c5f5485c2df
 - gclient sync
 - cd ..
 # patch webrtc to not generate ninja files for examples (that depend on gtk)
