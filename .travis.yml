@@ -32,7 +32,7 @@ script:
 # get WebRTC
 - mkdir webrtc
 - pushd webrtc
-- travis_wait 30 mvn fetch --no-history --nohooks webrtc_android
+- travis_wait 30 fetch --no-history --nohooks webrtc_android
 # patch webrtc to not generate ninja files for examples (that depend on gtk)
 - sed -i -e 's|"examples",||' src/BUILD.gn
 # patch webrtc to not download chromium-webrtc-resources
